@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Nova Platform notifications -->
-        <nova-notifications-quarkus-extension.version>1.1.4</nova-notifications-quarkus-extension.version>
+        <nova-notifications-quarkus-extension.version>1.1.6</nova-notifications-quarkus-extension.version>
 
         <!-- Quarkus 3.33.2.1 LTS (the last stable 3.33.x patch; the Nova canonical LTS branch) -->
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
