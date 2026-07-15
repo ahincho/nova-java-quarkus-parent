@@ -35,11 +35,17 @@
 
     <!-- Read-only repositories: Nova Platform artifacts published to GitHub Packages.
          Maven requires authentication for GitHub Packages even on public repos.
-         Credentials are managed by the per-runner settings.xml (server id "github",
-         token from NOVA_PACKAGES_READ_TOKEN env var). -->
+         Credentials are managed by nova-setup-java (server ids
+         "nova-packages-read-bom" and "nova-packages-read-starter", token
+         NOVA_PACKAGES_READ_TOKEN). Maven requires id unico por repository, so
+         each Nova repo we depend on needs its own entry with a matching id. -->
     <repositories>
         <repository>
-            <id>github</id>
+            <id>nova-packages-read-bom</id>
+            <url>https://maven.pkg.github.com/ahincho/nova-java-quarkus-parent</url>
+        </repository>
+        <repository>
+            <id>nova-packages-read-starter</id>
             <url>https://maven.pkg.github.com/ahincho/nova-java-notifications-quarkus-extension</url>
         </repository>
     </repositories>
