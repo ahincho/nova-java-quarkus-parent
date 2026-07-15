@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pe.edu.nova.java</groupId>
+    <artifactId>nova-quarkus-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Nova Platform Quarkus Parent</name>
+    <description>Parent POM for microservice instances built on the Nova Platform meta-framework with Quarkus. Centralizes Java 25, Quarkus 3.33.2.1 LTS, Maven plugins, and the nova-notifications-quarkus-extension dependency.</description>
+
+    <properties>
+        <!-- Java -->
+        <java.version>25</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Nova Platform notifications -->
+        <nova-notifications-quarkus-extension.version>1.1.2</nova-notifications-quarkus-extension.version>
+
+        <!-- Quarkus 3.33.2.1 LTS (the last stable 3.33.x patch; the Nova canonical LTS branch) -->
+        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.version>3.33.2.1</quarkus.platform.version>
+
+        <!-- Plugins -->
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
+    </properties>
+
+    <!-- Read-only repositories: Nova Platform artifacts published to GitHub Packages.
+         Maven requires authentication for GitHub Packages even on public repos.
+         Credentials are managed by the per-runner settings.xml (server id "github",
+         token from NOVA_PACKAGES_READ_TOKEN env var). -->
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ahincho/nova-java-notifications-quarkus-extension</url>
+        </repository>
+    </repositories>
+
+    <!-- Dependency management: import the Quarkus BOM so child modules don't pin versions. -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Dependencies inherited by every child module. -->
+    <dependencies>
+        <!-- Nova Platform notifications adapter: wires the NotificationFacade bean -->
+        <dependency>
+            <groupId>pe.edu.nova.java.starters</groupId>
+            <artifactId>nova-notifications-quarkus-extension</artifactId>
+            <version>${nova-notifications-quarkus-extension.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Pre-configured Maven plugins. -->
+    <build>
+        <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <release>${java.version}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire for unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+
+            <!-- Failsafe for integration tests (*IT.java) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Distribution management: GitHub Packages -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ahincho/nova-java-quarkus-parent</url>
+        </repository>
+    </distributionManagement>
+
+</project>
