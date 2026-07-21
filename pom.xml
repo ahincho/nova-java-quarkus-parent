@@ -6,7 +6,7 @@
 
     <groupId>pe.edu.nova.java</groupId>
     <artifactId>nova-quarkus-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.8</version>
     <packaging>pom</packaging>
 
     <name>Nova Platform Quarkus Parent</name>
@@ -19,13 +19,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Nova Platform notifications -->
-        <nova-notifications-quarkus-extension.version>1.1.6</nova-notifications-quarkus-extension.version>
-
-        <!-- Quarkus 3.33.2.1 LTS (the last stable 3.33.x patch; the Nova canonical LTS branch) -->
-        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-        <quarkus.platform.version>3.33.2.1</quarkus.platform.version>
+        <!-- Nova Quarkus BOM: single source of truth for Quarkus version +
+             internal extensions. Bump this property to roll forward the
+             whole Nova Quarkus stack at once. -->
+        <nova-quarkus-bom.version>1.0.2</nova-quarkus-bom.version>
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
@@ -42,7 +39,7 @@
     <repositories>
         <repository>
             <id>nova-packages-read-bom</id>
-            <url>https://maven.pkg.github.com/ahincho/nova-java-quarkus-parent</url>
+            <url>https://maven.pkg.github.com/ahincho/nova-bom</url>
         </repository>
         <repository>
             <id>nova-packages-read-starter</id>
@@ -50,13 +47,14 @@
         </repository>
     </repositories>
 
-    <!-- Dependency management: import the Quarkus BOM so child modules don't pin versions. -->
+    <!-- Dependency management: import the Nova Quarkus BOM (which itself
+         imports the upstream Quarkus BOM and pins the Nova extensions). -->
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>${quarkus.platform.artifact-id}</artifactId>
-                <version>${quarkus.platform.version}</version>
+                <groupId>pe.edu.nova.java</groupId>
+                <artifactId>nova-quarkus-bom</artifactId>
+                <version>${nova-quarkus-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
