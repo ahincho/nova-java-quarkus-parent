@@ -63,11 +63,11 @@
 
     <!-- Dependencies inherited by every child module. -->
     <dependencies>
-        <!-- Nova Platform notifications adapter: wires the NotificationFacade bean -->
+        <!-- Nova Platform notifications adapter: wires the NotificationFacade bean.
+             Version is managed by the imported nova-quarkus-bom; do NOT pin inline. -->
         <dependency>
             <groupId>pe.edu.nova.java.starters</groupId>
             <artifactId>nova-notifications-quarkus-extension</artifactId>
-            <version>${nova-notifications-quarkus-extension.version}</version>
         </dependency>
     </dependencies>
 
