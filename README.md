@@ -9,8 +9,7 @@ This is the Quarkus counterpart of
 [`ahincho/nova-java-spring-boot-parent`](https://github.com/ahincho/nova-java-spring-boot-parent).
 Both follow the same role and consumption pattern: an instance pom.xml
 declares `<parent>pe.edu.nova.java:nova-quarkus-parent</parent>` and
-inherits Java / framework / plugin defaults plus the
-`nova-notifications-quarkus-extension` starter.
+inherits Java / framework / plugin defaults.
 
 ## What this parent centralizes
 
@@ -22,7 +21,6 @@ inherits Java / framework / plugin defaults plus the
 | Maven Surefire Plugin | 3.5.3 (unit tests, JUnit Platform) |
 | Maven Failsafe Plugin | 3.5.3 (integration tests, `*IT.java`) |
 | Quarkus BOM | `io.quarkus.platform:quarkus-bom:3.33.2.1` (pre-imported) |
-| Nova notifications | `pe.edu.nova.java.starters:nova-notifications-quarkus-extension:1.1.2` (pre-included) |
 
 ## How to consume
 
@@ -72,7 +70,6 @@ looks like:
 
 - `java.version` — Java source/target/release (default `25`).
 - `quarkus.platform.version` — Quarkus BOM version (default `3.33.2.1`).
-- `nova-notifications-quarkus-extension.version` — Nova adapter version (default `1.1.2`).
 
 ## Distribution
 
